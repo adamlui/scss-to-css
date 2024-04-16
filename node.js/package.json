@@ -1,0 +1,63 @@
+{
+  "name": "@adamlui/scss-to-css",
+  "version": "1.7.14",
+  "description": "Recursively compile all SCSS files into minified CSS",
+  "author": {
+    "name": "Adam Lui",
+    "email": "adam@kudoai.com",
+    "url": "https://github.com/adamlui"
+  },
+  "homepage": "https://js-utils.com/scss-to-css",
+  "license": "MIT",
+  "main": "dist/scss-to-css.min.js",
+  "files": [
+    "dist",
+    "docs/",
+    "!docs/*/"
+  ],
+  "bin": {
+    "scsstocss": "dist/cli.min.js",
+    "scss-to-css": "dist/cli.min.js"
+  },
+  "directories": {
+    "lib": "./dist",
+    "doc": "./docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "bash utils/build.sh",
+    "bump:patch": "bash utils/bump.sh patch",
+    "bump:minor": "bash utils/bump.sh minor",
+    "bump:major": "bash utils/bump.sh major",
+    "publish:patch": "bash utils/bump.sh patch --publish",
+    "publish:minor": "bash utils/bump.sh minor --publish",
+    "publish:major": "bash utils/bump.sh major --publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamlui/js-utils.git"
+  },
+  "keywords": [
+    "scss",
+    "compiler",
+    "minifier",
+    "cli",
+    "api",
+    "sass",
+    "css",
+    "stylesheets"
+  ],
+  "bugs": {
+    "url": "https://js-utils.com/issues"
+  },
+  "dependencies": {
+    "sass": "^1.75.0"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/adamlui"
+  },
+  "devDependencies": {
+    "@adamlui/minify.js": "^1.5.4"
+  }
+}
