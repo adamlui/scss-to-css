@@ -1,4 +1,4 @@
-name: Sync new releases to adam/js-utils
+name: Sync new releases to adamlui/js-utils
 
 on:
   release:
@@ -6,10 +6,10 @@ on:
 
 jobs:
   sync-new-release:
-    name: Sync new releases to adam/js-utils
+    name: Sync new releases to adamlui/js-utils
     runs-on: ubuntu-latest
     steps:
-      - name: Sync new releases to adam/js-utils
+      - name: Sync new releases to adamlui/js-utils
         run: |
           # Get latest release title/tag/notes
           latest_release=$(curl -s https://api.github.com/repos/adamlui/scss-to-css/releases/latest)
