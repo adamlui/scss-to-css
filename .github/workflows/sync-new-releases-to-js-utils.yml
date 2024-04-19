@@ -35,8 +35,7 @@ jobs:
           create_release_url="https://api.github.com/repos/adamlui/js-utils/releases"
           create_release_payload=$(
             printf '{"tag_name": "minify.js-%s","name": "%s","body": "%s"}' \
-                     "$(echo "$release_tag_name" | sed 's/v//')" "$release_title" "$release_notes")
-
+              "$(echo "$release_tag_name" | sed 's/v//')" "$release_title" "$release_notes")
           create_release_response=$(
             curl -s -S -X POST -H "Authorization: token ${{ secrets.REPO_SYNC_PAT }}" \
                  -H "Content-Type: application/json" -d "$create_release_payload" "$create_release_url")
