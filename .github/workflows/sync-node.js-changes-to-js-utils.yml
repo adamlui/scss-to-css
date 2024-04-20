@@ -2,8 +2,8 @@ name: Sync README.md between node.js/ and node.js/docs/, then node.js/* to adaml
 
 on:
   push:
-    branches: main
-    paths: node.js/**
+    branches: [main]
+    paths: [node.js/**]
 
 jobs:
   build:

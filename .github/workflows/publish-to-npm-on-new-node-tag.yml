@@ -2,7 +2,7 @@ name: Publish to npm on new node tag
 
 on:
   push:
-    tags: "node*"
+    tags: ["node*"]
 
 jobs:
   build:
