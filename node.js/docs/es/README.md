@@ -212,16 +212,16 @@ Nombre       | Descripción                                                     
 
 #
 
-### `findSCSS(searchDir[, opciones])`
+### `findSCSS(dirBúsqueda[, opciones])`
 
-Busca todos los archivos SCSS dentro de la cadena `searchDir` pasada (útil para descubrir qué archivos procesará [`compile()`](#compilerutaEntrada-opciones)) y devuelve una matriz que contiene sus rutas de archivo.
+Busca todos los archivos SCSS dentro de la cadena `dirBúsqueda` pasada (útil para descubrir qué archivos procesará [`compile()`](#compilerutaEntrada-opciones)) y devuelve una matriz que contiene sus rutas de archivo.
 
 Las opciones son booleanas y se pasan como propiedades del objeto. Por ejemplo:
 
 ```js
 // Busca archivos SCSS exactamente en assets/scss:
-const searchResults = scssToCSS.findSCSS('assets/scss', { recursive: false });
-console.log(searchResults);
+const resultadosBúsqueda = scssToCSS.findSCSS('assets/scss', { recursive: false });
+console.log(resultadosBúsqueda);
 
 /* salida de muestra:
 
