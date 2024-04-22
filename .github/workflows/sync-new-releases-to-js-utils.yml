@@ -42,7 +42,7 @@ jobs:
           echo "Publishing new release..."
           create_release_url="https://api.github.com/repos/adamlui/js-utils/releases"
           create_release_payload=$(
-            printf '{"tag_name": "minify.js-%s","name": "%s","body": "%s"}' \
+            printf '{"tag_name": "scss-to-css-%s","name": "%s","body": "%s"}' \
               "$target_release_tag_name" "$release_title" "$release_notes")
           create_release_response=$(
             curl -s -S -X POST -H "Authorization: token ${{ secrets.REPO_SYNC_PAT }}" \
