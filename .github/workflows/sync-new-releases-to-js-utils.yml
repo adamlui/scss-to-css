@@ -62,4 +62,4 @@ jobs:
                    > /dev/null 2>&1 # hide verbosity
           done
           
-          echo "Release duplicated to adamlui/js-utils."
+          echo "Release duplicated to adamlui/js-utils tagged $target_release_tag_name"
