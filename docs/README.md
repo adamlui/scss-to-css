@@ -246,7 +246,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ### [🖼️ img-to-webp](https://github.com/adamlui/js-utils/tree/main/img-to-webp)
 
 > Recursively compress all images to WEBPs.
-<br>[Download](https://raw.githubusercontent.com/adamlui/js-utils/main/img-to-webp/img-to-webp.js) /
+<br>[Download](https://cdn.jsdelivr.net/gh/adamlui/js-utils/img-to-webp/img-to-webp.js) /
 [Discuss](https://github.js-utils.com/discussions)
 
 ### [</> minify.js](https://minify-js.org) <a href="https://github.com/toolleeo/cli-apps#programming"><img height=18 src="https://awesome.re/mentioned-badge.svg"></a>
