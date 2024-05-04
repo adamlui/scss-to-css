@@ -77,6 +77,6 @@ jobs:
           push_options: --force
           add_options: --all
           commit_user_email: auto-sync@kudoai.com
-          commit_message: "${{ github.event.head_commit.message }} ↞ [auto-sync from `adamlui/scss-to-css`]"
+          commit_message: "${{ github.event.head_commit.message }} ↞ [auto-sync from `adamlui/scss-to-css/node.js`]"
           file_pattern: "scss-to-css/node.js/**"
           repository: adamlui/js-utils
