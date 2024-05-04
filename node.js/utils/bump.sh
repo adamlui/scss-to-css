@@ -1,12 +1,16 @@
 #!/bin/bash
 
-# This script automates: build minified JS >>> bump versions in manifests + READMEs
-# >>> commit changes to Git >>> push changes to GitHub >>> publish to npm (optional)
+# This script automates:
+# >>> bump versions in manifests + READMEs >>> commit bumps to Git
+# >>> build minified JS to dist/ >>> update jsDelivr URL in cli.min.js >>> commit build to Git
+# >>> push changes to GitHub >>> publish to npm (optional)
 
 # Init UI colors
 nc="\033[0m"    # no color
-bg="\033[1;92m" # bright green
 br="\033[1;91m" # bright red
+by="\033[1;33m" # bright yellow
+bg="\033[1;92m" # bright green
+bw="\033[1;97m" # bright white
 
 # Validate version arg
 VERSION_TYPES=("major" "minor" "patch")
@@ -24,15 +28,12 @@ case $1 in # edit SUBVERS based on version type
 esac
 NEW_VERSION=$(printf "%s.%s.%s" "${SUBVERS[@]}")
 
-# Build minified JS for dist/
-bash utils/build.sh
-
 # Bump version in package.json + package-lock.json
-echo -e "\nBumping versions in package manifests..."
+echo -e "${by}Bumping versions in package manifests...${bw}"
 npm version --no-git-tag-version "$NEW_VERSION"
 
 # Bump versions in READMEs
-echo -e "\nBumping versions in READMEs..."
+echo -e "${by}\nBumping versions in READMEs...${bw}"
 PACKAGE_NAME=$(node -pe "require('./package.json').name" | sed -e 's/^@[a-zA-Z0-9-]*\///' -e 's/^@//')
 sed_actions=(
     # Latest Build shield link
@@ -47,21 +48,34 @@ sed_actions=(
 find . -name 'README.md' "${sed_actions[@]}"
 echo "v$NEW_VERSION"
 
-# Commit to Git
-echo -e "\nCommitting changes...\n"
+# Commit bumps to Git
+echo -e "${by}\nCommitting bumps to Git...\n${nc}"
 find . -name "README.md" -exec git add {} +
 git add package*.json
 git commit -n -m "Bumped $PACKAGE_NAME versions to $NEW_VERSION"
+
+# Build minified JS to dist/
+echo -e "${by}\nBuilding minified JS...\n${nc}"
+bash utils/build.sh
+
+# Update jsDelivr URL for global messages w/ commit hash
+echo -e "${by}\nUpdating jsDelivr URL for global messages w/ commit hash...${nc}"
+BUMP_HASH=$(git rev-parse HEAD)
+if sed -i -E "s|(cdn\.jsdelivr\.net\/gh\/[^/]+\/[^@/]+)[^/]*|\1@$BUMP_HASH|" dist/cli.min.js
+    then echo -e "${bw}$BUMP_HASH${nc}" ; fi
+
+# Commit build to Git
+echo -e "${by}\nCommitting build to Git...\n${nc}"
 git add ./dist/*.js
 git commit -n -m "Built $PACKAGE_NAME v$NEW_VERSION"
 
-# Push to GiHub
-echo -e "\nPushing to GitHub...\n"
+# Push changes to GiHub
+echo -e "${by}\nPushing to GitHub...\n${nc}"
 git push
 
 # Publish to NPM
 if [[ "$*" == *"--publish"* ]] ; then
-    echo -e "\nPublishing to npm...\n"
+    echo -e "${by}\nPublishing to npm...\n${nc}"
     npm publish ; fi
 
 # Print final summary
