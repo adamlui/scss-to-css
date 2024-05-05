@@ -108,18 +108,20 @@ $ scss-to-css input_folder output_folder
 ### Command line options
 
 ```
-Config options:
- -n, --dry-run               Don't actually compile the file(s), just
-                             show if they will be processed.
- -d, --include-dotfolders    Include dotfolders in file search.
- -S, --no-source-maps        Prevent source maps from being generated.
- -M, --no-minify             Disable minification of output CSS.
- -R, --no-recursion          Disable recursive file searching.
- -q, --quiet                 Suppress all logging except errors.
+Boolean options:
+ -n, --dry-run                            Don't actually compile the file(s), just show if they will be processed.
+ -d, --include-dotfolders                 Include dotfolders in file search.
+ -S, --no-source-maps                     Prevent source maps from being generated.
+ -M, --no-minify                          Disable minification of output CSS.
+ -R, --no-recursion                       Disable recursive file searching.
+ -q, --quiet                              Suppress all logging except errors.
+
+Parameter options:
+ --ignore-files="file1.scss,file2.scss"   Files to exclude from compilation.
 
 Info commands:
- -h, --help                  Display help screen.
- -v, --version               Show version number.
+ -h, --help                               Display help screen.
+ -v, --version                            Show version number.
 ```
 
 <br>
