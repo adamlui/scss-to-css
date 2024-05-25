@@ -72,7 +72,7 @@ Output di esempio:
 
 <img src="https://cdn.jsdelivr.net/gh/adamlui/scss-to-css@b74edea/node.js/media/images/screenshots/cli/scss-to-css-docs-cmd-output.png">
 
-**💡 Nota:** Anche le mappe sorgente vengono generate per impostazione predefinita a meno che non venga passato `-S` o `--no-source-maps`.
+**📝 Nota:** Anche le mappe sorgente vengono generate per impostazione predefinita a meno che non venga passato `-S` o `--no-source-maps`.
 
 #
 
@@ -85,7 +85,7 @@ $ scss-to-css [percorso_input] [percorso_output]
 - `[percorso_input]`: Percorso del file SCSS o della direttorio contenente i file SCSS da compilare, relativo alla direttorio di lavoro corrente.
 - `[percorso_output]`: Percorso del file o della direttorio in cui verranno archiviati i file CSS + mappa sorgente, relativo alla posizione del file originale (se non fornito, viene utilizzato `css/`).
 
-**💡 Nota:** Se vengono passate cartelle, i file verranno elaborati in modo ricorsivo a meno che non venga passato `-R` o `--no-recursion`.
+**📝 Nota:** Se vengono passate cartelle, i file verranno elaborati in modo ricorsivo a meno che non venga passato `-R` o `--no-recursion`.
 
 #
 
@@ -127,7 +127,7 @@ Specifica entrambe le direttorio **input e output** (output in `cartella_output/
 $ scss-to-css cartella_input cartella_output
 ```
 
-**💡 Nota:** Il CSS di output viene minimizzato a meno che non venga passato `-M` o `--no-minify`.
+**📝 Nota:** Il CSS di output viene minimizzato a meno che non venga passato `-M` o `--no-minify`.
 
 #
 

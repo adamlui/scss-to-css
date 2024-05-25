@@ -72,7 +72,7 @@ Exemple de sortie:
 
 <img src="https://cdn.jsdelivr.net/gh/adamlui/scss-to-css@b74edea/node.js/media/images/screenshots/cli/scss-to-css-docs-cmd-output.png">
 
-**💡 Remarque:** Les cartes sources sont également générées par défaut à moins que `-S` ou `--no-source-maps` ne soient transmis.
+**📝 Remarque:** Les cartes sources sont également générées par défaut à moins que `-S` ou `--no-source-maps` ne soient transmis.
 
 #
 
@@ -85,7 +85,7 @@ $ scss-to-css [chemin_entrée] [chemin_sortie]
 - `[chemin_entrée]`: Chemin d'accès au fichier SCSS ou au répertoire contenant les fichiers SCSS à compiler, par rapport au répertoire de travail actuel.
 - `[chemin_sortie]`: Chemin d'accès au fichier ou au répertoire où les fichiers de carte CSS + source seront stockés, par rapport à l'emplacement du fichier d'origine (s'il n'est pas fourni, `css/` est utilisé).
 
-**💡 Remarque:** Si des dossiers sont transmis, les fichiers seront traités de manière récursive à moins que `-R` ou `--no-recursion` soit transmis.
+**📝 Remarque:** Si des dossiers sont transmis, les fichiers seront traités de manière récursive à moins que `-R` ou `--no-recursion` soit transmis.
 
 #
 
@@ -127,7 +127,7 @@ Spécifiez les répertoires **saisir et sortir** (sorties vers `dossier_sortie/`
 $ scss-to-css dossier_entrée dossier_sortie
 ```
 
-**💡 Remarque:** Le CSS de sortie est réduit à moins que `-M` ou `--no-minify` soit transmis.
+**📝 Remarque:** Le CSS de sortie est réduit à moins que `-M` ou `--no-minify` soit transmis.
 
 #
 

@@ -72,7 +72,7 @@ $ scss-to-css
 
 <img src="https://cdn.jsdelivr.net/gh/adamlui/scss-to-css@b74edea/node.js/media/images/screenshots/cli/scss-to-css-docs-cmd-output.png">
 
-**💡 注:** `-S` または `--no-source-maps` が渡されない限り、ソース マップもデフォルトで生成されます。
+**📝 注:** `-S` または `--no-source-maps` が渡されない限り、ソース マップもデフォルトで生成されます。
 
 #
 
@@ -85,7 +85,7 @@ $ scss-to-css [input_path] [output_path]
 - `[input_path]`: 現在の作業ディレクトリを基準とした、コンパイル対象の SCSS ファイルまたは SCSS ファイルを含むディレクトリへのパス。
 - `[output_path]`: CSS + ソース マップ ファイルが保存されるファイルまたはディレクトリへのパス (元のファイルの場所を基準とした相対パス) (指定しない場合は、`css/` が使用されます)。
 
-**💡 注:** フォルダーが渡された場合、`-R` または `--no-recursion` が渡されない限り、ファイルは再帰的に処理されます。
+**📝 注:** フォルダーが渡された場合、`-R` または `--no-recursion` が渡されない限り、ファイルは再帰的に処理されます。
 
 #
 
@@ -127,7 +127,7 @@ $ scss-to-css path/to/your/file.scss
 $ scss-to-css input_folder output_folder
 ```
 
-**💡 注:** 出力 CSS は、`-M` または `--no-minify` が渡されない限り縮小されます。
+**📝 注:** 出力 CSS は、`-M` または `--no-minify` が渡されない限り縮小されます。
 
 #
 

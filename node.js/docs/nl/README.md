@@ -72,7 +72,7 @@ Voorbeelduitvoer:
 
 <img src="https://cdn.jsdelivr.net/gh/adamlui/scss-to-css@b74edea/node.js/media/images/screenshots/cli/scss-to-css-docs-cmd-output.png">
 
-**💡 Opmerking:** Bronkaarten worden ook standaard gegenereerd, tenzij `-S` of `--no-source-maps` wordt doorgegeven.
+**📝 Opmerking:** Bronkaarten worden ook standaard gegenereerd, tenzij `-S` of `--no-source-maps` wordt doorgegeven.
 
 #
 
@@ -85,7 +85,7 @@ $ scss-to-css [invoer_pad] [uitvoer_pad]
 - `[invoer_pad]`: Pad naar SCSS-bestand of map met SCSS-bestanden die moeten worden gecompileerd, relatief ten opzichte van de huidige werkmap.
 - `[uitvoer_pad]`: Pad naar bestand of map waar CSS + brontoewijzingsbestanden zullen worden opgeslagen, relatief ten opzichte van de oorspronkelijke bestandslocatie (indien niet opgegeven, wordt `css/` gebruikt).
 
-**💡 Opmerking:** Als mappen worden doorgegeven, worden bestanden recursief verwerkt tenzij `-R` of `--no-recursion` wordt doorgegeven.
+**📝 Opmerking:** Als mappen worden doorgegeven, worden bestanden recursief verwerkt tenzij `-R` of `--no-recursion` wordt doorgegeven.
 
 #
 
@@ -127,7 +127,7 @@ Specificeer zowel de mappen **input als uitvoer** (uitvoer naar `uitvoer_map/`):
 $ scss-to-css invoer_map uitvoer_map
 ```
 
-**💡 Opmerking:** Uitvoer-CSS wordt verkleind tenzij `-M` of `--no-minify` wordt doorgegeven.
+**📝 Opmerking:** Uitvoer-CSS wordt verkleind tenzij `-M` of `--no-minify` wordt doorgegeven.
 
 #
 

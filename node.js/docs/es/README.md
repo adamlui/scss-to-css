@@ -72,7 +72,7 @@ Salida de muestra:
 
 <img src="https://cdn.jsdelivr.net/gh/adamlui/scss-to-css@b74edea/node.js/media/images/screenshots/cli/scss-to-css-docs-cmd-output.png">
 
-**💡 Nota:** Los mapas de origen también se generan de forma predeterminada a menos que se pase `-S` o `--no-source-maps`.
+**📝 Nota:** Los mapas de origen también se generan de forma predeterminada a menos que se pase `-S` o `--no-source-maps`.
 
 #
 
@@ -85,7 +85,7 @@ $ scss-to-css [ruta_de_entrada] [ruta_de_salida]
 - `[ruta_de_entrada]`: Ruta al archivo SCSS o al directorio que contiene los archivos SCSS que se van a compilar, en relación con el directorio de trabajo actual.
 - `[ruta_de_salida]`: Ruta al archivo o directorio donde se almacenarán los archivos CSS y de mapas fuente, en relación con la ubicación del archivo original (si no se proporciona, se utiliza `css/`).
 
-**💡 Nota:** Si se pasan carpetas, los archivos se procesarán de forma recursiva a menos que se pase `-R` o `--no-recursion`.
+**📝 Nota:** Si se pasan carpetas, los archivos se procesarán de forma recursiva a menos que se pase `-R` o `--no-recursion`.
 
 #
 
@@ -127,7 +127,7 @@ Especifique los directorios **entrada y salida** (salidas a `carpeta_salida/`):
 $ scss-to-css carpeta_entrada carpeta_salida
 ```
 
-**💡 Nota:** El CSS de salida se minimiza a menos que se pase `-M` o `--no-minify`.
+**📝 Nota:** El CSS de salida se minimiza a menos que se pase `-M` o `--no-minify`.
 
 #
 

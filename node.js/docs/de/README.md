@@ -72,7 +72,7 @@ Beispielausgabe:
 
 <img src="https://cdn.jsdelivr.net/gh/adamlui/scss-to-css@b74edea/node.js/media/images/screenshots/cli/scss-to-css-docs-cmd-output.png">
 
-**💡 Hinweis:** Quellkarten werden ebenfalls standardmäßig generiert, es sei denn, `-S` oder `--no-source-maps` wird übergeben.
+**📝 Hinweis:** Quellkarten werden ebenfalls standardmäßig generiert, es sei denn, `-S` oder `--no-source-maps` wird übergeben.
 
 #
 
@@ -85,7 +85,7 @@ $ scss-to-css [eingabepfad] [ausgabepfad]
 - `[eingabepfad]`: Pfad zur SCSS-Datei oder zum Verzeichnis, das die zu kompilierenden SCSS-Dateien enthält, relativ zum aktuellen Arbeitsverzeichnis.
 - `[ausgabepfad]`: Pfad zur Datei oder zum Verzeichnis, in dem CSS- und Quellzuordnungsdateien gespeichert werden, relativ zum ursprünglichen Dateispeicherort (falls nicht angegeben, wird `css/` verwendet).
 
-**💡 Hinweis:** Wenn Ordner übergeben werden, werden Dateien rekursiv verarbeitet, es sei denn, `-R` oder `--no-recursion` wird übergeben.
+**📝 Hinweis:** Wenn Ordner übergeben werden, werden Dateien rekursiv verarbeitet, es sei denn, `-R` oder `--no-recursion` wird übergeben.
 
 #
 
@@ -127,7 +127,7 @@ Geben Sie sowohl **Eingabe- als auch Ausgabeverzeichnisse** an (Ausgaben in `aus
 $ scss-to-css eingabeordner ausgabeordner
 ```
 
-**💡 Hinweis:** Ausgabe-CSS wird minimiert, sofern nicht `-M` oder `--no-minify` übergeben wird.
+**📝 Hinweis:** Ausgabe-CSS wird minimiert, sofern nicht `-M` oder `--no-minify` übergeben wird.
 
 #
 
