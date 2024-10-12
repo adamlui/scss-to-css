@@ -8,8 +8,6 @@ jobs:
   sync-new-release:
     name: Sync new releases to adamlui/js-utils
     runs-on: ubuntu-latest
-    env:
-      TZ: PST8PDT
 
     steps:
 
