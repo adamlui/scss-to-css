@@ -18,7 +18,7 @@ export default [
             'no-useless-escape': 'off', // allow all escape chars cause ESLint sucks at detecting truly useless ones
             'no-unused-vars': ['error', { 'caughtErrors': 'none' }] // allow unused named args in catch blocks
         },
-        languageOptions: { ecmaVersion: 2022, sourceType: 'script', globals: { ...globals.node }}
+        languageOptions: { ecmaVersion: 'latest', sourceType: 'script', globals: { ...globals.node }}
     },
     { files: ['**/*.mjs'], languageOptions: { sourceType: 'module' }},
     { files: ['**/*.json'], ...json.configs['recommended'] }
