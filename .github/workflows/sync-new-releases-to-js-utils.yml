@@ -2,7 +2,7 @@ name: Sync new releases to adamlui/js-utils
 
 on:
   release:
-    types: [published]
+    types: [released]
 
 jobs:
   sync-new-release:
