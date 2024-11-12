@@ -1,6 +1,7 @@
 import js from '@eslint/js'
 import globals from 'globals'
-import json from 'eslint-plugin-json'
+import json from '@eslint/json'
+import markdown from '@eslint/markdown'
 
 export default [
     { ignores: ['**/sandbox/*'] },
@@ -20,5 +21,13 @@ export default [
         languageOptions: { ecmaVersion: 'latest', sourceType: 'script', globals: { ...globals.node }}
     },
     { files: ['**/*.mjs'], languageOptions: { sourceType: 'module' }},
-    { files: ['**/*.json'], ...json.configs['recommended'] }
+    { files: ['**/*.json'], ignores: ['**/package-lock.json'], language: 'json/json', ...json.configs.recommended },
+    {
+        files: ['**/*.md'], language: 'markdown/commonmark', plugins: { markdown },
+        rules: {
+            ...markdown.configs.recommended[0].rules,
+            'markdown/heading-increment': 'off', // allow headings to skip levels
+            'markdown/fenced-code-language': 'off' // allow code blocks w/ no language specified
+        }
+    }
 ]
