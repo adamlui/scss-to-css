@@ -4,5 +4,6 @@ updates:
     directories:
       - /
       - node.js/
+    versioning-strategy: increase
     schedule:
       interval: daily
