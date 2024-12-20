@@ -1,15 +1,13 @@
-name: Sync new releases to adamlui/js-utils
+name: Sync latest release to adamlui/js-utils
 
 on: workflow_dispatch
 
 jobs:
-  sync-new-release:
-    name: Sync new releases to adamlui/js-utils
+  sync-latest-release:
+    name: Sync latest release to adamlui/js-utils
     runs-on: ubuntu-latest
-
     steps:
-
-      - name: Sync new releases to adamlui/js-utils
+      - name: Sync latest release to adamlui/js-utils
         run: |
           # Get latest release title/tag/notes
           latest_release=$(curl -s https://api.github.com/repos/adamlui/scss-to-css/releases/latest)
