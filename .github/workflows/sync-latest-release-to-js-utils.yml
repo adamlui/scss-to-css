@@ -8,7 +8,6 @@ jobs:
   sync-latest-release:
     name: Sync latest release to adamlui/js-utils
     runs-on: ubuntu-latest
-    # if: github.actor != 'github-actions[bot]'
     steps:
       - name: Sync latest release to adamlui/js-utils
         run: |
@@ -20,6 +19,8 @@ jobs:
             sed 's|📃|:page_with_curl:|g; s|🚀|:rocket:|g; s|🧠|:brain:|g' | # replace emojis w/ CLDR short names
             sed -E "s|(scss-to-css)(/compare/)([^-]+)-v([0-9.]+)\.\.\.([^-]+)-v|js-utils\2\1-\3-\4\.\.\.\1-\3-|g" | # replace tags in compare URL
             sed -E "s|(scss-to-css)(/tree/)([^-]+)-v([0-9.]+)|js-utils\2\1-\3-\4/\1|g") # replace tag in README URL
+          if [[ "$RELEASE_NOTES" == *"Auto-synced from"* ]] ; then
+            echo "Release already auto-synced. Exiting..." ; exit 0 ; fi
           echo "Release Title: $RELEASE_TITLE"
           echo "Release Tag: $release_tag_name"
 
@@ -41,6 +42,7 @@ jobs:
           # Publish new release
           echo "Publishing new release..."
           create_release_url="https://api.github.com/repos/adamlui/js-utils/releases"
+          RELEASE_NOTES="###### _Auto-synced from https://github.com/adamlui/scss-to-css/releases_\n\n$RELEASE_NOTES"
           create_release_payload=$(
             printf '{"tag_name": "%s","name": "%s","body": "%s"}' \
               "$TARGET_RELEASE_TAG_NAME" "$RELEASE_TITLE" "$RELEASE_NOTES")
