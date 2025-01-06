@@ -8,7 +8,7 @@ jobs:
   sync-latest-release:
     name: Sync latest release to adamlui/js-utils
     runs-on: ubuntu-latest
-    if: github.actor != 'github-actions[bot]'
+    # if: github.actor != 'github-actions[bot]'
     steps:
       - name: Sync latest release to adamlui/js-utils
         run: |
