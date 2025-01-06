@@ -42,7 +42,7 @@ jobs:
           # Publish new release
           echo "Publishing new release..."
           create_release_url="https://api.github.com/repos/adamlui/js-utils/releases"
-          RELEASE_NOTES="###### _Auto-synced from https://github.com/adamlui/scss-to-css/releases_\n\n$RELEASE_NOTES"
+          RELEASE_NOTES+="\n\n###### _Auto-synced from https://github.com/adamlui/scss-to-css/releases_"
           create_release_payload=$(
             printf '{"tag_name": "%s","name": "%s","body": "%s"}' \
               "$TARGET_RELEASE_TAG_NAME" "$RELEASE_TITLE" "$RELEASE_NOTES")
