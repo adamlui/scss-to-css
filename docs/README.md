@@ -13,7 +13,7 @@
 <a href="https://github.com/toolleeo/cli-apps#conversion">
     <img height=31 src="https://img.shields.io/badge/Mentioned_in-Awesome-c4a2bd?logo=awesomelists&logoColor=white&labelColor=464646&style=for-the-badge"></a>
 
-<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/gradient-aqua.png?52b67bc">
+<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/aqua-gradient.png?v=7e4a141">
 
 ## ⚡ Installation
 
@@ -39,7 +39,7 @@ $ npm install @adamlui/scss-to-css
 
 <a href="https://github.com/sponsors/adamlui"><img src="https://assets.scsstocss.org/images/banners/sponsor/$10/banner1660x260.png?2cba0ae"></a>
 
-<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/gradient-aqua.png?52b67bc">
+<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/aqua-gradient.png?v=7e4a141">
 
 ## 💻 Command line usage
 
@@ -135,7 +135,7 @@ Info commands:
 
 <br>
 
-<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/gradient-aqua.png?52b67bc">
+<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/aqua-gradient.png?v=7e4a141">
 
 ## 🔌 API usage
 
@@ -239,7 +239,7 @@ Name          | Type    | Desciption                                            
 
 <br>
 
-<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/gradient-aqua.png?52b67bc">
+<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/aqua-gradient.png?v=7e4a141">
 
 ## 🏛️ MIT License
 
@@ -253,7 +253,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 <br>
 
-<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/gradient-aqua.png?52b67bc">
+<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/aqua-gradient.png?v=7e4a141">
 
 ## 🛠️ Related utilities
 
@@ -274,7 +274,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 <br>
 
-<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/gradient-aqua.png?52b67bc">
+<img height=6px width="100%" src="https://assets.scsstocss.org/images/separators/aqua-gradient.png?v=7e4a141">
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.scsstocss.org/images/icons/home/white/icon32x27.png?52b67bc"><img height=13 src="https://assets.scsstocss.org/images/icons/home/dark-gray/icon32x27.png?52b67bc"></picture> <a href="https://js-utils.com">**More JavaScript utilities**</a> /
 <a href="https://github.scsstocss.org/discussions">Discuss</a> /
