@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths: [node.js/**]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     if: (github.repository == 'adamlui/scss-to-css') && (github.event.commits[0].committer.username != 'kudo-sync-bot')
