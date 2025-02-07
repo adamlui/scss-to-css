@@ -1,9 +1,9 @@
-name: Sync README.md between node.js/ & node.js/docs/, then node.js/ to adamlui/js-utils/scss-to-css/node.js/
+name: Sync README.md between node.js/ & node.js/docs/, then ** to adamlui/js-utils/scss-to-css
 
 on:
   push:
     branches: [main]
-    paths: [node.js/**]
+    paths: ["**", "!.*"]
 
 permissions:
   contents: read
@@ -32,7 +32,7 @@ jobs:
           repository: adamlui/js-utils
           path: adamlui/js-utils
 
-      - name: Sync README.md between node.js/ * node.js/docs
+      - name: Sync README.md between node.js/ & node.js/docs
         run: |
           cd ${{ github.workspace }}/adamlui/scss-to-css
 
@@ -60,11 +60,11 @@ jobs:
           # Expose sync src for commit msg in self-push step
           echo "SYNC_SRC=$src_folder" >> $GITHUB_ENV
 
-      - name: Sync node.js/ to adamlui/js-utils/scss-to-css/node.js/
+      - name: Sync ** to adamlui/js-utils/scss-to-css/
         run: |
-          rsync -avhr --delete \
-            ${{ github.workspace }}/adamlui/scss-to-css/node.js/ \
-            ${{ github.workspace }}/adamlui/js-utils/scss-to-css/node.js/
+          rsync -avhr --delete --exclude '.*' \
+            ${{ github.workspace }}/adamlui/scss-to-css/ \
+            ${{ github.workspace }}/adamlui/js-utils/scss-to-css/
 
       - name: Escape backticks in commit msg
         env:
@@ -86,15 +86,13 @@ jobs:
         if: env.SYNC_SRC
         run: |
           cd ${{ github.workspace }}/adamlui/scss-to-css
-          git pull # again to sync w/ concurrent workflow updates
-          git add .
+          git pull && git add .
           git commit -n -m "$ESCAPED_MSG ↞ [auto-sync from ${{ env.SYNC_SRC }}]" || true
           git push
 
       - name: Push changes to adamlui/js-utils
         run: |
           cd ${{ github.workspace }}/adamlui/js-utils
-          git pull # again to sync w/ concurrent workflow updates
-          git add .
+          git pull && git add .
           git commit -n -m "$ESCAPED_MSG ↞ [auto-sync from https://github.com/adamlui/scss-to-css]" || true
           git push
