@@ -20,6 +20,7 @@ jobs:
       - name: Checkout adamlui/scss-to-css
         uses: actions/checkout@v5
         with:
+          token: ${{ secrets.REPO_SYNC_PAT }}
           path: adamlui/scss-to-css
           fetch-depth: 2
 
