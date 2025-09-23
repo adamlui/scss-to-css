@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync latest release to adamlui/js-utils
+        env:
+          REPO_SYNC_PAT: ${{ secrets.REPO_SYNC_PAT }}
         run: |
           # Get latest release title/tag/notes
           latest_release=$(curl -s https://api.github.com/repos/adamlui/scss-to-css/releases/latest)
@@ -50,7 +52,7 @@ jobs:
             printf '{"tag_name": "%s","name": "%s","body": "%s"}' \
               "$TARGET_RELEASE_TAG_NAME" "$RELEASE_TITLE" "$RELEASE_NOTES")
           create_release_response=$(
-            curl -s -S -X POST -H "Authorization: token ${{ secrets.REPO_SYNC_PAT }}" \
+            curl -s -S -X POST -H "Authorization: token $REPO_SYNC_PAT" \
                  -H "Content-Type: application/json" -d "$create_release_payload" "$create_release_url")
           
           # Upload assets to new release
@@ -61,7 +63,7 @@ jobs:
             filename=$(basename "$url")
             echo "Uploading $filename..."
             curl -s -S --data-binary @"$filename" \
-                 -H "Authorization: token ${{ secrets.REPO_SYNC_PAT }}" \
+                 -H "Authorization: token $REPO_SYNC_PAT" \
                  -H "Content-Type: application/octet-stream" \
                  "$upload_url?name=$filename" \
                    > /dev/null 2>&1 # hide verbosity
