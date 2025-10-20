@@ -1,4 +1,4 @@
-name: Sync changes between **/bump.sh
+name: Sync changes to **/bump.sh
 
 on:
   push:
@@ -10,18 +10,18 @@ permissions:
 
 jobs:
   build:
-    if: (github.repository == 'adamlui/minify.js') && (github.event.commits[0].committer.username != 'kudo-sync-bot')
+    if: (github.repository == 'adamlui/scss-to-css') && (github.event.commits[0].committer.username != 'kudo-sync-bot')
     runs-on: ubuntu-latest
     env:
       TZ: PST8PDT
 
     steps:
 
-      - name: Checkout adamlui/minify.js
+      - name: Checkout adamlui/scss-to-css
         uses: actions/checkout@v5.0.0
         with:
           token: ${{ secrets.REPO_SYNC_PAT }}
-          path: adamlui/minify.js
+          path: adamlui/scss-to-css
           fetch-depth: 2
 
       - name: Checkout adamlui/js-utils
@@ -31,9 +31,9 @@ jobs:
           repository: adamlui/js-utils
           path: adamlui/js-utils
 
-      - name: Sync changes between **/bump.sh
+      - name: Sync changes to **/bump.sh
         run: |
-          cd ${{ github.workspace }}/adamlui/minify.js
+          cd ${{ github.workspace }}/adamlui/scss-to-css
 
           # Find the newest bump.sh
           files=$(find . -name "bump.sh" -type f)
@@ -55,11 +55,11 @@ jobs:
           sync_src=$(echo "$newest_file" | cut -d'/' -f2-3)
           echo "SYNC_SRC=$sync_src" >> $GITHUB_ENV
 
-      - name: Sync ** to adamlui/js-utils/minify.js/
+      - name: Sync ** to adamlui/js-utils/scss-to-css/
         run: |
           rsync -avhr --delete --exclude '.*' \
-            ${{ github.workspace }}/adamlui/minify.js/ \
-            ${{ github.workspace }}/adamlui/js-utils/minify.js/
+            ${{ github.workspace }}/adamlui/scss-to-css/ \
+            ${{ github.workspace }}/adamlui/js-utils/scss-to-css/
 
       - name: Escape backticks in commit msg
         env:
@@ -80,10 +80,10 @@ jobs:
           git config --global user.email "auto-sync@kudoai.com"
           git config --global user.signingkey "$GPG_PRIVATE_ID"
 
-      - name: Push changes to adamlui/minify.js
+      - name: Push changes to adamlui/scss-to-css
         if: env.SYNC_SRC
         run: |
-          cd ${{ github.workspace }}/adamlui/minify.js
+          cd ${{ github.workspace }}/adamlui/scss-to-css
           git pull # again to sync w/ concurrent workflow updates
           git add .
           git commit -n -m "$ESCAPED_MSG ↞ [auto-sync from $SYNC_SRC]" || true
@@ -93,5 +93,5 @@ jobs:
         run: |
           cd ${{ github.workspace }}/adamlui/js-utils
           git pull && git add .
-          git commit -n -m "$ESCAPED_MSG ↞ [auto-sync from https://github.com/adamlui/minify.js]" || true
+          git commit -n -m "$ESCAPED_MSG ↞ [auto-sync from https://github.com/adamlui/scss-to-css]" || true
           git push
