@@ -1,0 +1,97 @@
+name: Sync changes between **/bump.sh
+
+on:
+  push:
+    branches: [main]
+    paths: ["**/bump.sh"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: (github.repository == 'adamlui/minify.js') && (github.event.commits[0].committer.username != 'kudo-sync-bot')
+    runs-on: ubuntu-latest
+    env:
+      TZ: PST8PDT
+
+    steps:
+
+      - name: Checkout adamlui/minify.js
+        uses: actions/checkout@v5.0.0
+        with:
+          token: ${{ secrets.REPO_SYNC_PAT }}
+          path: adamlui/minify.js
+          fetch-depth: 2
+
+      - name: Checkout adamlui/js-utils
+        uses: actions/checkout@v5.0.0
+        with:
+          token: ${{ secrets.REPO_SYNC_PAT }}
+          repository: adamlui/js-utils
+          path: adamlui/js-utils
+
+      - name: Sync changes between **/bump.sh
+        run: |
+          cd ${{ github.workspace }}/adamlui/minify.js
+
+          # Find the newest bump.sh
+          files=$(find . -name "bump.sh" -type f)
+          newest_file="" ; newest_timestamp=0
+          for file in $files ; do
+            timestamp=$(git log -1 --format="%ct" -- "$file")
+            if (( $timestamp > $newest_timestamp )) ; then
+              newest_file=$file ; newest_timestamp=$timestamp
+          fi ; done
+
+          # Copy/paste over all other bump.sh files
+          if [[ -n $newest_file ]] ; then
+            for file in $files ; do
+              if [[ $file != $newest_file ]] ; then
+                cp -f "$newest_file" "$file"
+          fi ; done ; fi
+
+          # Expose sync src for commit msg in next step
+          sync_src=$(echo "$newest_file" | cut -d'/' -f2-3)
+          echo "SYNC_SRC=$sync_src" >> $GITHUB_ENV
+
+      - name: Sync ** to adamlui/js-utils/minify.js/
+        run: |
+          rsync -avhr --delete --exclude '.*' \
+            ${{ github.workspace }}/adamlui/minify.js/ \
+            ${{ github.workspace }}/adamlui/js-utils/minify.js/
+
+      - name: Escape backticks in commit msg
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          echo "ESCAPED_MSG<<EOF" >> $GITHUB_ENV
+          echo "$COMMIT_MSG" | sed 's/`/\`/g' >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Config committer
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PRIVATE_ID: ${{ secrets.GPG_PRIVATE_ID }}
+        run: |
+          gpg --batch --import <(echo "$GPG_PRIVATE_KEY")
+          git config --global commit.gpgsign true
+          git config --global user.name "kudo-sync-bot"
+          git config --global user.email "auto-sync@kudoai.com"
+          git config --global user.signingkey "$GPG_PRIVATE_ID"
+
+      - name: Push changes to adamlui/minify.js
+        if: env.SYNC_SRC
+        run: |
+          cd ${{ github.workspace }}/adamlui/minify.js
+          git pull # again to sync w/ concurrent workflow updates
+          git add .
+          git commit -n -m "$ESCAPED_MSG ↞ [auto-sync from $SYNC_SRC]" || true
+          git push
+
+      - name: Push changes to adamlui/js-utils
+        run: |
+          cd ${{ github.workspace }}/adamlui/js-utils
+          git pull && git add .
+          git commit -n -m "$ESCAPED_MSG ↞ [auto-sync from https://github.com/adamlui/minify.js]" || true
+          git push
