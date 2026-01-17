@@ -4,13 +4,12 @@ on:
   push:
     tags: ["*"]
 
-permissions:
-  contents: read
-
 jobs:
   sync-latest-release:
     name: Sync latest release to adamlui/js-utils
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Sync latest release to adamlui/js-utils
         env:
