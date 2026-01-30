@@ -33,8 +33,8 @@ jobs:
             echo "Release already auto-synced. Exiting." ; exit 0 ; fi
           RELEASE_NOTES="$(printf '%s' "$RELEASE_NOTES" | \
             sed 's|📃|:page_with_curl:|g; s|🚀|:rocket:|g; s|🧠|:brain:|g' | \
-            sed -E 's|(scss-to-css)(/tree/)([^-]+)-v?([0-9.]+)|js-utils\2\1-\3-\4/\1|g')"
-
+            sed -E 's|(https://github\.com/adamlui/scss-to-css/tree/)([^"]+)|\
+          https://github.com/adamlui/js-utils/tree/\2/scss-to-css|g')"
           TARGET_RELEASE_TAG_NAME="scss-to-css-${release_tag_name#v}"
           echo "Target Tag: $TARGET_RELEASE_TAG_NAME"
 
