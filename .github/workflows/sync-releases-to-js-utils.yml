@@ -14,106 +14,95 @@ jobs:
       REPO_SYNC_PAT: ${{ secrets.REPO_SYNC_PAT }}
     steps:
       - name: Sync release to adamlui/js-utils
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          # Basic release info
+        run: |  
+          # Get release title/tag/notes from event
           RELEASE_TITLE="${{ github.event.release.name }}"
           release_tag_name="${{ github.event.release.tag_name }}"
+
+          # Get fresh release data from API
+          this_release=$(curl -s https://api.github.com/repos/adamlui/scss-to-css/releases/tags/$release_tag_name)
+          RELEASE_NOTES=$(echo "$this_release" | sed -nE 's/.*"body": "(.*)".*/\1/p')
+
+          if [[ "$RELEASE_NOTES" == *"Auto-synced from"* ]] ; then
+              echo "Release already auto-synced. Exiting..." ; exit 0 ; fi
+
+          # Process notes
+          RELEASE_NOTES=$(echo "$RELEASE_NOTES" | \
+            sed 's|📃|:page_with_curl:|g; s|🚀|:rocket:|g; s|🧠|:brain:|g')
+
           echo "Release Title: $RELEASE_TITLE"
           echo "Release Tag: $release_tag_name"
 
-          # Fetch release JSON
-          this_release="$(curl -fsSL \
-            "https://api.github.com/repos/adamlui/scss-to-css/releases/tags/$release_tag_name")"
+          # Determine target tag name in js-utils
+          TARGET_RELEASE_TAG_NAME="scss-to-css-$(echo "$release_tag_name" | sed -E 's/^v//')"
 
-          RELEASE_NOTES="$(printf '%s' "$this_release" | sed -nE 's/.*"body":[[:space:]]*"(.*)".*/\1/p')"
-          if [[ "$RELEASE_NOTES" == *"Auto-synced from"* ]] ; then
-            echo "Release already auto-synced. Exiting." ; exit 0 ; fi
-          RELEASE_NOTES="$(printf '%s' "$RELEASE_NOTES" | \
-            sed 's|📃|:page_with_curl:|g; s|🚀|:rocket:|g; s|🧠|:brain:|g')"
-          TARGET_RELEASE_TAG_NAME="scss-to-css-${release_tag_name#v}"
-          echo "Target Tag: $TARGET_RELEASE_TAG_NAME"
-
-          # Check if target release exists
-          release_check_resp="$(curl -fsSL \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/adamlui/js-utils/releases/tags/$TARGET_RELEASE_TAG_NAME" || true)"
+          # Check if release exists in js-utils
+          release_check_resp=$(curl -s -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/adamlui/js-utils/releases/tags/$TARGET_RELEASE_TAG_NAME)
+          
           if echo "$release_check_resp" | grep -q '"id"'; then
             RELEASE_EXISTS=true
-            TARGET_RELEASE_ID="$(echo "$release_check_resp" \
-              | grep -o '"id":[[:space:]]*[0-9]\+' \
-              | head -1 | grep -o '[0-9]\+')"
-            echo "Release exists in js-utils (ID: $TARGET_RELEASE_ID)"
+            TARGET_RELEASE_ID=$(echo "$release_check_resp" | grep -o '"id":[[:space:]]*[0-9]\+' | head -1 | grep -o '[0-9]\+')
+            echo "Release exists @ adamlui/js-utils (ID: $TARGET_RELEASE_ID). Will update..."
           else
             RELEASE_EXISTS=false
-            echo "Release does not exist in js-utils"
+            echo "Release doesn't exist. Will create..."
           fi
 
           # Download assets
-          download_urls="$(printf '%s' "$this_release" \
-            | grep -o '"browser_download_url":[[:space:]]*"[^"]*"' \
-            | cut -d '"' -f 4)"
-          for url in $download_urls ; do
-            echo "Downloading $(basename "$url")"
-            curl -fsSLO "$url"
+          download_urls=$(echo "$this_release" | grep -o '"browser_download_url": ".*"' | cut -d '"' -f 4)
+          for url in $download_urls; do
+            echo -e "Downloading $(basename "$url")..."
+            curl -LOs "$url"
           done
 
           # Add sync footer
           RELEASE_NOTES+="\n\n###### _Auto-synced from https://github.com/adamlui/scss-to-css/releases"
           RELEASE_NOTES+=" by [kudo-sync-bot](https://github.com/kudo-sync-bot)_"
+          
+          if [ "$RELEASE_EXISTS" = false ] ; then # create new release
+            echo "Creating new release..."
+            create_release_url="https://api.github.com/repos/adamlui/js-utils/releases"
+            create_release_payload=$(
+              printf '{"tag_name": "%s","name": "%s","body": "%s"}' \
+                "$TARGET_RELEASE_TAG_NAME" "$RELEASE_TITLE" "$RELEASE_NOTES")
+            create_release_response=$(
+              curl -s -S -X POST -H "Authorization: token $REPO_SYNC_PAT" \
+                   -H "Content-Type: application/json" -d "$create_release_payload" "$create_release_url")
+            upload_url=$(echo "$create_release_response" | sed -nE 's|.*"upload_url": "(.*)".*|\1|p' | sed 's|{.*}||')
 
-          # Create or update release
-          if [ "$RELEASE_EXISTS" = false ] ; then
-            echo "Creating release in js-utils..."
-
-            create_release_payload="$(printf \
-              '{"tag_name":"%s","name":"%s","body":"%s"}' \
-              "$TARGET_RELEASE_TAG_NAME" "$RELEASE_TITLE" "$RELEASE_NOTES")"
-
-            create_release_response="$(curl -fsSL -X POST \
-              -H "Authorization: token $REPO_SYNC_PAT" \
-              -H "Content-Type: application/json" \
-              -d "$create_release_payload" \
-              https://api.github.com/repos/adamlui/js-utils/releases)"
-
-            upload_url="$(printf '%s' "$create_release_response" \
-              | sed -nE 's/.*"upload_url":[[:space:]]*"([^"]+)".*/\1/p' \
-              | sed 's|{.*}||')"
-          else
+          else # update existing release
             echo "Updating existing release..."
+            update_release_url="https://api.github.com/repos/adamlui/js-utils/releases/$TARGET_RELEASE_ID"
+            update_release_payload=$(
+              printf '{"name": "%s","body": "%s"}' \
+                "$RELEASE_TITLE" "$RELEASE_NOTES")
+            patch_response=$(curl -s -S -X PATCH -H "Authorization: token $REPO_SYNC_PAT" \
+                 -H "Content-Type: application/json" -d "$update_release_payload" "$update_release_url")
+            if echo "$patch_response" | grep -q '"message"'; then
+                echo "ERROR: Failed to update release: $patch_response"
+                exit 1
+            fi
 
-            update_release_payload="$(printf \
-              '{"name":"%s","body":"%s"}' \
-              "$RELEASE_TITLE" "$RELEASE_NOTES")"
-
-            curl -fsSL -X PATCH \
-              -H "Authorization: token $REPO_SYNC_PAT" \
-              -H "Content-Type: application/json" \
-              -d "$update_release_payload" \
-              "https://api.github.com/repos/adamlui/js-utils/releases/$TARGET_RELEASE_ID" \
-              > /dev/null
-
-            upload_url="$(printf '%s' "$release_check_resp" \
-              | sed -nE 's/.*"upload_url":[[:space:]]*"([^"]+)".*/\1/p' \
-              | sed 's|{.*}||')"
+            release_get_response=$(curl -s -S -H "Authorization: token $REPO_SYNC_PAT" \
+              "https://api.github.com/repos/adamlui/js-utils/releases/tags/$TARGET_RELEASE_TAG_NAME")
+            upload_url=$(echo "$release_get_response" | sed -nE 's|.*"upload_url": "(.*)".*|\1|p' | sed 's|{.*}||')
           fi
-
+          
           # Upload assets
-          if [ -n "$upload_url" ]; then
-            echo "Uploading assets..."
-            for url in $download_urls; do
-              file="$(basename "$url")"
-              echo "Uploading $file"
-              curl -fsSL --data-binary @"$file" \
-                -H "Authorization: token $REPO_SYNC_PAT" \
-                -H "Content-Type: application/octet-stream" \
-                "$upload_url?name=$file" \
-                > /dev/null
-            done
+          echo "Uploading assets to release..."
+          if [ -z "$upload_url" ]; then
+            echo "ERROR: Could not get upload URL. Skipping asset upload."
           else
-            echo "WARNING: upload_url missing, skipping assets"
+            for url in $download_urls ; do
+              filename=$(basename "$url")
+              echo "Uploading $filename..."
+              curl -s -S --data-binary @"$filename" \
+                   -H "Authorization: token $REPO_SYNC_PAT" \
+                   -H "Content-Type: application/octet-stream" \
+                   "$upload_url?name=$filename" \
+                     > /dev/null 2>&1 # hide verbosity
+            done
           fi
 
-          echo "✅ Release synced to adamlui/js-utils as $TARGET_RELEASE_TAG_NAME"
+          echo "Release duplicated to adamlui/js-utils tagged $TARGET_RELEASE_TAG_NAME"
