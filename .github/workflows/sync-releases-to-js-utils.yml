@@ -31,13 +31,8 @@ jobs:
           RELEASE_NOTES="$(printf '%s' "$this_release" | sed -nE 's/.*"body":[[:space:]]*"(.*)".*/\1/p')"
           if [[ "$RELEASE_NOTES" == *"Auto-synced from"* ]] ; then
             echo "Release already auto-synced. Exiting." ; exit 0 ; fi
-
-          # Normalize release notes
           RELEASE_NOTES="$(printf '%s' "$RELEASE_NOTES" | \
-            sed 's|📃|:page_with_curl:|g; s|🚀|:rocket:|g; s|🧠|:brain:|g')"
-          RELEASE_NOTES="$(printf '%s' "$RELEASE_NOTES" | \
-            sed -E 's|(scss-to-css)(/compare/)([^-]+)-v?([0-9.]+)\.\.\.([^-]+)-v?|js-utils\2\1-\3-\4...\1-\3-|g')"
-          RELEASE_NOTES="$(printf '%s' "$RELEASE_NOTES" | \
+            sed 's|📃|:page_with_curl:|g; s|🚀|:rocket:|g; s|🧠|:brain:|g' | \
             sed -E 's|(scss-to-css)(/tree/)([^-]+)-v?([0-9.]+)|js-utils\2\1-\3-\4/\1|g')"
 
           TARGET_RELEASE_TAG_NAME="scss-to-css-${release_tag_name#v}"
@@ -72,7 +67,7 @@ jobs:
           RELEASE_NOTES+=" by [kudo-sync-bot](https://github.com/kudo-sync-bot)_"
 
           # Create or update release
-          if [ "$RELEASE_EXISTS" = false ]; then
+          if [ "$RELEASE_EXISTS" = false ] ; then
             echo "Creating release in js-utils..."
 
             create_release_payload="$(printf \
