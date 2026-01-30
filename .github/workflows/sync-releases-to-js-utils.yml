@@ -32,9 +32,7 @@ jobs:
           if [[ "$RELEASE_NOTES" == *"Auto-synced from"* ]] ; then
             echo "Release already auto-synced. Exiting." ; exit 0 ; fi
           RELEASE_NOTES="$(printf '%s' "$RELEASE_NOTES" | \
-            sed 's|📃|:page_with_curl:|g; s|🚀|:rocket:|g; s|🧠|:brain:|g' | \
-            sed -E 's|(https://github\.com/adamlui/scss-to-css/tree/)([^"/]+)|\
-          https://github.com/adamlui/js-utils/tree/\2/scss-to-css|g')"
+            sed 's|📃|:page_with_curl:|g; s|🚀|:rocket:|g; s|🧠|:brain:|g')"
           TARGET_RELEASE_TAG_NAME="scss-to-css-${release_tag_name#v}"
           echo "Target Tag: $TARGET_RELEASE_TAG_NAME"
 
