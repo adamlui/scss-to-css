@@ -1,4 +1,4 @@
-name: Sync README.md between node.js/ & node.js/docs/, then ** to adamlui/js-utils/scss-to-css
+name: Sync README.md between ./ & ./docs/, then ** to adamlui/js-utils/scss-to-css
 
 on:
   push:
@@ -30,15 +30,15 @@ jobs:
           repository: adamlui/js-utils
           path: adamlui/js-utils
 
-      - name: Sync README.md between node.js/ & node.js/docs
+      - name: Sync README.md between ./ & ./docs
         run: |
           cd ${{ github.workspace }}/adamlui/scss-to-css
 
           # Init paths/content/mod timestamps
-          root_readme="./node.js/README.md"
+          root_readme="./README.md"
           root_readme_content=$(git show HEAD:"$root_readme")
           root_readme_modified=$(git log -1 --format="%ct" -- "$root_readme")
-          docs_readme="./node.js/docs/README.md"
+          docs_readme="./docs/README.md"
           docs_readme_content=$(git show HEAD:"$docs_readme")
           docs_readme_modified=$(git log -1 --format="%ct" -- "$docs_readme")
 
@@ -47,11 +47,11 @@ jobs:
             if (( $root_readme_modified > $docs_readme_modified )) ; then
               cp -f "$root_readme" "$docs_readme"
               echo "Copied $root_readme to $docs_readme"
-              src_folder="/node.js"
+              src_folder="/"
             elif (( $docs_readme_modified > $root_readme_modified )) ; then
               cp -f "$docs_readme" "$root_readme"
               echo "Copied $docs_readme to $root_readme"
-              src_folder="/node.js/docs"
+              src_folder="/docs"
             fi
           fi
 
