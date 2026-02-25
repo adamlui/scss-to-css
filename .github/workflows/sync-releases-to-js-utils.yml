@@ -58,7 +58,7 @@ jobs:
 
           # Add sync footer
           RELEASE_NOTES+="\n\n###### _Auto-synced from https://github.com/adamlui/scss-to-css/releases"
-          RELEASE_NOTES+=" by [kudo-sync-bot](https://github.com/kudo-sync-bot)_"
+          RELEASE_NOTES+=" by_ :robot: [kudo-sync-bot](https://github.com/kudo-sync-bot)"
           
           if [ "$RELEASE_EXISTS" = false ] ; then # create new release
             echo "Creating new release..."
