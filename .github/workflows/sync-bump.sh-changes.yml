@@ -56,7 +56,7 @@ jobs:
 
       - name: Sync ** to adamlui/js-utils/scss-to-css/
         run: |
-          rsync -avhr --delete --exclude '.*' \
+          rsync -avhc --delete --exclude '.*' \
             ${{ github.workspace }}/adamlui/scss-to-css/ \
             ${{ github.workspace }}/adamlui/js-utils/scss-to-css/
 
