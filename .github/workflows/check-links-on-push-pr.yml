@@ -1,4 +1,4 @@
-name: Check links on push + PR
+name: Validate links on push + PR
 
 on:
   push:
@@ -19,13 +19,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6.0.2
 
-      - name: Check links
+      - name: Validate links
         uses: lycheeverse/lychee-action@v2.8.0
         with:
-          # Check all MD files, ignore ok/redir/blocked/rate-limited
-          args: >
-            "*.md" "**/*.md"
-            --verbose --no-progress
-            --accept 200..299,300..399,403,429
+          # Check all files, ignore ok/redir/blocked/rate-limited
+          args: . --verbose --no-progress --accept 200..299,300..399,403,429
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
