@@ -28,7 +28,9 @@ jobs:
 
           # Process notes
           RELEASE_NOTES=$(echo "$RELEASE_NOTES" | \
-            sed 's|📃|:page_with_curl:|g; s|🚀|:rocket:|g; s|🧠|:brain:|g')
+            sed 's|📃|:page_with_curl:|g; s|🚀|:rocket:|g; s|🧠|:brain:|g' | \
+            sed -E "s|(scss-to-css)(/compare/)v([0-9.]+)\.\.\.v|js-utils\2\1-\3\.\.\.\1-|g" | \
+            sed -E "s|(scss-to-css)(/tree/)v([0-9.]+)|js-utils\2\1-\3/\1|g")
 
           echo "Release Title: $RELEASE_TITLE"
           echo "Release Tag: $release_tag_name"
