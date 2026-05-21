@@ -2,11 +2,7 @@ name: Validate links on push + PR
 
 on:
   push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -14,7 +10,6 @@ permissions:
 
 jobs:
   linkinator:
-    if: false
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6.0.2
