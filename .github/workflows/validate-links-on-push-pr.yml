@@ -15,4 +15,4 @@ jobs:
       - uses: JustinBeckwith/linkinator-action@0aba655887759067b44761b8dc0ab8b275e08275 # v2.4.3
         with:
           paths: '**/*.md'
-          statusCodes: '{ "429": "skip" }'
+          statusCodes: '{ "408": "skip", "429": "skip" }'
